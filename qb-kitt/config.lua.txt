@@ -1,0 +1,31 @@
+Config = {}
+
+-- Car model hash (replace with your Knight Rider car spawn name)
+Config.KITTModel = `ruiner2000`
+
+-- Master toggle (server-side can override this)
+Config.MasterToggle = true
+
+-- Toggle features
+Config.EnableEngineStartLine = true
+Config.EnableDamageLine      = true
+Config.EnableTurboLine       = true
+Config.EnableRandomChatter   = true
+Config.EnableScannerEffect   = true
+
+-- Cooldowns (seconds)
+Config.TurboCooldown   = 30
+Config.ChatterInterval = 60
+Config.ScannerInterval = 5 -- seconds between scanner sweeps
+
+-- Key bindings
+Config.TurboKey = 21 -- Shift key
+
+-- Voice lines mapping
+Config.VoiceLines = {
+    engineStart = 'all_systems_go',
+    damage      = 'vitals',
+    turbo       = 'turbo',
+    chatter     = { 'voice', 'property', 'speechless' },
+    scanner     = 'scanner'
+}

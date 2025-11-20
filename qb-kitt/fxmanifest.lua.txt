@@ -1,0 +1,24 @@
+fx_version 'cerulean'
+game 'gta5'
+
+author 'GameGalactic (Steven)'
+description 'Knight Rider KITT voice + scanner integration for QB-Core'
+version '3.0.0'
+
+lua54 'yes'
+
+shared_script 'config.lua'
+
+client_scripts {
+    'client/kitt.lua'
+}
+
+server_scripts {
+    'server/kitt.lua'
+}
+
+files {
+    'sounds/*.ogg'
+}
+
+data_file 'AUDIO_WAVEPACK' 'sounds'

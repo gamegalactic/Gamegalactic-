@@ -1,0 +1,18 @@
+local enabled = Config.MasterToggle
+
+-- Command for admins to toggle globally
+RegisterCommand('togglekitt', function(source, args, raw)
+    if source == 0 or IsPlayerAceAllowed(source, 'admin') then
+        enabled = not enabled
+        TriggerClientEvent('qb-kitt:client:setEnabled', -1, enabled)
+        print('[qb-kitt] Global KITT voice system set to: '..tostring(enabled))
+    else
+        TriggerClientEvent('QBCore:Notify', source, 'No permission to toggle KITT system', 'error')
+    end
+end, true)
+
+-- Sync state when player joins
+AddEventHandler('playerJoining', function()
+    local src = source
+    TriggerClientEvent('qb-kitt:client:setEnabled', src, enabled)
+end)
