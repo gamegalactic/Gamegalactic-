@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS transporter_jobs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    player_id VARCHAR(64) NOT NULL,
+    vehicle_plate VARCHAR(32) NOT NULL,
+    cargo_type VARCHAR(64) NOT NULL,
+    status ENUM('active','delivered','failed') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS transporter_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    player_id VARCHAR(64) NOT NULL,
+    cargo_type VARCHAR(64) NOT NULL,
+    payout INT NOT NULL,
+    delivered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
