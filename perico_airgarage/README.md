@@ -19,3 +19,5 @@ CREATE TABLE IF NOT EXISTS perico_planes (
   UNIQUE KEY unique_plate (plate),
   KEY idx_citizenid (citizenid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+once your plane is stored using /storeplane , you will need to check your database for the plate number using /getplane [plate number] to retrieve it
