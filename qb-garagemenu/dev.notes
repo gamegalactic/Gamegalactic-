@@ -1,0 +1,67 @@
+?? qb-garagemenu
+Garage Menu Vehicle Delivery for QB-Core
+
+?? Overview
+qb-garagemenu provides a simple, config-driven way for players to view and spawn their stored vehicles using qb-menu. It pulls vehicles directly from the player_vehicles table, filters them by allowed garages, and spawns them near the player with saved properties.
+
+?? Commands
+/garage ? Opens the garage menu for the logged-in player.
+
+Shows only vehicles stored in garages listed in Config.AllowedGarages.
+
+Supports pagination (10 vehicles per page).
+
+Vehicle selection ? Spawns the chosen car near the player and updates its state in the DB.
+
+??? Configuration (config.lua)
+lua
+Config = {}
+
+-- Toggle debug prints
+Config.Debug = true
+
+-- Garages allowed in the menu
+Config.AllowedGarages = {
+    "pillboxgarage",
+    "Owners manshion",
+    "el fuente blanco",
+    "Fuenta-2",
+    "police",
+    "airsshores",
+    "higginsheli"
+}
+
+-- Delivery settings
+Config.DeliveryOffset = 2.0   -- spawn distance from player
+Config.UseFees = false        -- charge fee for delivery
+Config.FeeAmount = 500        -- fee in in-game currency
+?? Debugging
+Server console prints:
+
+DB returned rows: X ? confirms DB query worked.
+
+Sending vehicleData to client: {...} ? shows what’s passed to client.
+
+Client F8 prints:
+
+Opening garage menu with X vehicles ? menu opened.
+
+Vehicle chosen: model [plate] ? selection event fired.
+
+Spawning vehicle: model [plate] ? spawn event fired.
+
+?? Dependencies
+qb-core
+
+qb-menu
+
+oxmysql
+
+? Notes
+Works for all players — each sees only their own vehicles tied to their citizenid.
+
+Invalid models are caught and reported (no silent fails).
+
+Pagination keeps menus stable with large garages.
+
+Debug toggle makes it easy to switch verbose logging on/off.
