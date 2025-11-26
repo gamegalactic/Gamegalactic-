@@ -1,0 +1,28 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
+-- Example: target system integration
+exports['qb-target']:AddTargetModel(`prop_vend_soda_01`, {
+    options = {
+        {
+            label = "Use Drinks Machine",
+            icon = "fas fa-coffee",
+            action = function(entity)
+                local machineId = "club_machine" -- you can map by location/model
+                local machine = Config.Machines[machineId]
+                local menu = {}
+                for _, item in pairs(machine.items) do
+                    table.insert(menu, {
+                        header = item.name.." ($"..item.price..")",
+                        txt = "Stock: "..item.stock,
+                        params = {
+                            event = "drinks:buyItem",
+                            args = {machineId, item.name}
+                        }
+                    })
+                end
+                exports['qb-menu']:openMenu(menu)
+            end
+        }
+    },
+    distance = 2.0
+})

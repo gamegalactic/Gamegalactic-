@@ -1,0 +1,39 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
+-- Handle purchase
+RegisterNetEvent("drinks:buyItem", function(machineId, itemName)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local machine = Config.Machines[machineId]
+
+    if not machine then return end
+
+    for _, item in pairs(machine.items) do
+        if item.name == itemName then
+            if item.stock > 0 then
+                if Player.Functions.RemoveMoney("cash", item.price) then
+                    Player.Functions.AddItem(item.name, 1)
+                    item.stock = item.stock - 1
+                    TriggerClientEvent("QBCore:Notify", src, "You bought "..item.name.." for $"..item.price, "success")
+                else
+                    TriggerClientEvent("QBCore:Notify", src, "Not enough cash!", "error")
+                end
+            else
+                TriggerClientEvent("QBCore:Notify", src, "Out of stock!", "error")
+            end
+        end
+    end
+end)
+
+-- Admin restock command
+QBCore.Commands.Add("restockmachine", "Restock a drinks machine", {{name="machineId", help="Machine ID"}}, true, function(source, args)
+    local machineId = args[1]
+    if Config.Machines[machineId] then
+        for _, item in pairs(Config.Machines[machineId].items) do
+            item.stock = 20 -- reset stock
+        end
+        TriggerClientEvent("QBCore:Notify", source, machineId.." restocked!", "success")
+    else
+        TriggerClientEvent("QBCore:Notify", source, "Invalid machine ID", "error")
+    end
+end, "admin")

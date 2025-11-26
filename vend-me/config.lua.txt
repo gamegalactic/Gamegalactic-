@@ -1,0 +1,19 @@
+Config = {}
+
+-- Define machine types and their stock
+Config.Machines = {
+    ["hospital_machine"] = {
+        label = "Hospital Drinks Machine",
+        items = {
+            {name = "water", price = 5, stock = 20},
+            {name = "coffee", price = 10, stock = 10},
+        }
+    },
+    ["club_machine"] = {
+        label = "Club Drinks Machine",
+        items = {
+            {name = "cola", price = 8, stock = 15},
+            {name = "energy_drink", price = 12, stock = 5},
+        }
+    }
+}
