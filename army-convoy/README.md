@@ -1,6 +1,6 @@
-# Army Convoy Resource
+# Army Convoy Resource THIS IS STILL A WORK IN PROGRESS
 
-A FiveM resource that spawns an army convoy at configurable bases and drives it to the player’s location.
+A FiveM resource that spawns an army convoy at configurable bases and drives it to the playerâ€™s location.
 
 ## Features
 - Spawn presets: Arena, Fort Zancudo, LSIA, Sandy Airfield
