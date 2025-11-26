@@ -31,4 +31,4 @@ Includes whitelist, NPC patrols, floodlights, and anti-aircraft logic.
 
 ## ?? Usage
 - Activate defences:
-
+/perico on/off
