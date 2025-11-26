@@ -2,7 +2,7 @@
 
 A lightweight FiveM client-side script for QBCore that removes excess greenery (trees, bushes, grass) to improve FPS — especially useful on Cayo Perico and other dense map areas.
 
------ Gamegalactic-----
+Authur: Gamegalactic
 
 ## 🚀 Features
 
@@ -18,3 +18,4 @@ A lightweight FiveM client-side script for QBCore that removes excess greenery (
 
 1. Drop the `qb-fps-cleaner` folder into your server's `resources` directory.
 2. Add this line to your `server.cfg`:
+
