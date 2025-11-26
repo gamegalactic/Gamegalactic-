@@ -1,0 +1,57 @@
+RegisterCommand(Config.Command, function()
+    local playerPed = PlayerPedId()
+    local targetVeh = GetVehiclePedIsIn(playerPed, false)
+
+    if targetVeh == 0 then
+        TriggerEvent("chat:addMessage", { args = {"TowAI", "You must be in or near a vehicle to request tow."}})
+        return
+    end
+
+    local targetVehNet = VehToNet(targetVeh)
+    TriggerServerEvent("towai:requestTow", targetVehNet)
+end, false)
+
+-- Spawn tow truck + driver when server approves
+RegisterNetEvent("towai:spawnTowClient")
+AddEventHandler("towai:spawnTowClient", function(targetVehNet)
+    local targetVeh = NetToVeh(targetVehNet)
+    if not DoesEntityExist(targetVeh) then
+        print("[TowAI] ERROR: Target vehicle does not exist.")
+        return
+    end
+
+    local towModel = Config.TowModels.towtruck
+    local driverModel = Config.DriverModel
+
+    RequestModel(towModel)
+    RequestModel(driverModel)
+    while not HasModelLoaded(towModel) or not HasModelLoaded(driverModel) do
+        Citizen.Wait(10)
+    end
+
+    local playerPed = PlayerPedId()
+    local spawnCoords = GetEntityCoords(playerPed) + vector3(10.0, 0.0, 0.0)
+    local towVeh = CreateVehicle(towModel, spawnCoords.x, spawnCoords.y, spawnCoords.z, 0.0, true, false)
+    local driverPed = CreatePedInsideVehicle(towVeh, 26, driverModel, -1, true, false)
+
+    print("[TowAI] Tow truck spawned with driver.")
+
+    TaskVehicleDriveToCoord(driverPed, towVeh, GetEntityCoords(targetVeh), 20.0, 0, towModel, Config.DrivingStyle, 1.0, true)
+
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(1000)
+            local dist = #(GetEntityCoords(towVeh) - GetEntityCoords(targetVeh))
+            if dist < 10.0 then
+                AttachEntityToEntity(targetVeh, towVeh, 20, 0.0, -2.0, 1.0, 0.0, 0.0, 0.0, false, false, true, false, 2, true)
+                print("[TowAI] Vehicle attached. Delivering to shop...")
+                TaskVehicleDriveToCoord(driverPed, towVeh, Config.MechanicShop, 20.0, 0, towModel, Config.DrivingStyle, 1.0, true)
+                Citizen.Wait(Config.CleanupDelay * 1000)
+                DeleteEntity(towVeh)
+                DeleteEntity(driverPed)
+                print("[TowAI] Cleanup complete.")
+                break
+            end
+        end
+    end)
+end)

@@ -1,0 +1,22 @@
+Config = {}
+
+-- Tow truck models
+Config.TowModels = {
+    flatbed = `flatbed`,
+    towtruck = `towtruck`
+}
+
+-- Driver ped model
+Config.DriverModel = `s_m_m_trucker_01`
+
+-- Mechanic shop delivery point
+Config.MechanicShop = vector3(550.0, -180.0, 54.0)
+
+-- Driving style (786603 = normal, 1074528293 = cautious)
+Config.DrivingStyle = 786603
+
+-- Command to trigger tow
+Config.Command = "aitow"
+
+-- Cleanup delay after delivery (seconds)
+Config.CleanupDelay = 15

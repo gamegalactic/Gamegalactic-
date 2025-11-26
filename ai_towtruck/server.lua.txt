@@ -1,0 +1,8 @@
+RegisterNetEvent("towai:requestTow")
+AddEventHandler("towai:requestTow", function(targetVehNet)
+    local src = source
+    print("[TowAI] Tow request received from player " .. src .. " for vehicle net ID " .. targetVehNet)
+
+    -- Tell the requesting client to spawn the tow truck
+    TriggerClientEvent("towai:spawnTowClient", src, targetVehNet)
+end)
